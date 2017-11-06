@@ -14,7 +14,7 @@ sudo add-apt-repository ppa:ondrej/php -y
 
 sudo apt-get update -y
 
-sudo apt-get install php7.1 php-fpm php-mysql php-xml -y
+sudo apt-get install php7.1 php-fpm php-mysql php-xml php-curl php-mbstring zip php-zip mcrypt php-mcrypt -y
 
 sudo sed -ie "s/^;cgi.fix_pathinfo=1/cgi.fix_pathinfo = 0/g" /etc/php/7.1/fpm/php.ini
 
@@ -42,11 +42,26 @@ mysql -uroot -proot -e "GRANT ALL PRIVILEGES ON *.* TO 'maxxecom'@'%' IDENTIFIED
 
 sudo service mysql restart
 
+# Phpmyadmin
+
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
+
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password root"
+
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password root"
+
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password root"
+
+sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect"
+
+sudo apt-get install phpmyadmin -y
+
+sudo mv /usr/share/phpmyadmin /var/www/phpmyadmin
+
 # Vhost
 
 sudo cp /var/www/config/nginx_vhost /etc/nginx/sites-available/
 sudo ln -s /etc/nginx/sites-available/nginx_vhost /etc/nginx/sites-enabled/
-sudo rm -rf /etc/nginx/sites-available/default
 sudo service nginx restart
 
 
