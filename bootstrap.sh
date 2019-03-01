@@ -10,15 +10,17 @@ sudo apt-get install nginx -y
 
 # PHP
 
+sudo apt-get install software-properties-common -y
+
 sudo add-apt-repository ppa:ondrej/php -y
 
 sudo apt-get update -y
 
-sudo apt-get install php7.1 php-fpm php-mysql php-xml php-curl php-mbstring zip php-zip mcrypt php-mcrypt -y
+sudo apt-get install php7.2 php-fpm php-mysql php-xml php-curl php-mbstring zip php-zip mcrypt php-mcrypt -y
 
-sudo sed -ie "s/^;cgi.fix_pathinfo=1/cgi.fix_pathinfo = 0/g" /etc/php/7.1/fpm/php.ini
+sudo sed -ie "s/^;cgi.fix_pathinfo=1/cgi.fix_pathinfo = 0/g" /etc/php/7.2/fpm/php.ini
 
-sudo service php7.1-fpm restart
+sudo service php7.2-fpm restart
 
 
 #Debconf
